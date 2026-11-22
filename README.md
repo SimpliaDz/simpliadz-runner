@@ -31,6 +31,7 @@ Open separate PowerShell terminals in this folder:
 .\scripts\start-database.ps1
 .\scripts\start-api.ps1
 .\scripts\start-web.ps1
+.\scripts\test-web-build.ps1
 .\scripts\run-mobile-emulator.ps1
 .\scripts\run-mobile-phone.ps1
 ```
@@ -40,6 +41,14 @@ Open separate PowerShell terminals in this folder:
 ```powershell
 .\scripts\start-web.ps1 -Language fr
 ```
+
+To test the production-style, folder-based localization build (including the saved language redirect), run:
+
+```powershell
+.\scripts\test-web-build.ps1
+```
+
+It builds the web app, then serves English at `/`, French at `/fr/`, and Arabic at `/ar/` on `http://localhost:4300`. It also proxies `/api` to the local API, so sign-in and saved language preferences work exactly as they do behind a production reverse proxy. Use `-NoBuild` to reuse an existing localized build or `-Port 4301` to select a different port.
 
 The web app uses the repository's Yarn 4 configuration and lockfile; do not use npm to install its dependencies.
 
