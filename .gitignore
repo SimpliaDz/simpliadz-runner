@@ -1,0 +1,4 @@
+# Each developer creates this file from config/local.example.json.
+# It may contain a LAN IP address and other machine-specific overrides.
+config/local.json
+

@@ -1,0 +1,16 @@
+{
+  "api": {
+    "port": 5278,
+    "listenHost": "0.0.0.0",
+    "browserHost": "localhost",
+    "phoneHost": "192.168.2.10",
+    "activeTenantId": "dev"
+  },
+  "web": {
+    "port": 4200
+  },
+  "mobile": {
+    "emulatorDeviceId": "emulator-5554",
+    "phoneDeviceId": ""
+  }
+}
