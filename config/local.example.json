@@ -4,7 +4,8 @@
     "listenHost": "0.0.0.0",
     "browserHost": "localhost",
     "phoneHost": "192.168.2.10",
-    "activeTenantId": "dev"
+    "activeTenantId": "dev",
+    "tenantCatalogPath": "config/tenants.local.json"
   },
   "web": {
     "port": 4200

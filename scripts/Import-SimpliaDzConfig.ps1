@@ -17,6 +17,42 @@ if (-not (Test-Path -LiteralPath $localConfigPath)) {
 
 $script:LocalConfig = Get-Content -LiteralPath $localConfigPath -Raw | ConvertFrom-Json
 
+function Get-TenantCatalogPath {
+    $configuredPath = $script:LocalConfig.api.tenantCatalogPath
+    if ([string]::IsNullOrWhiteSpace($configuredPath)) {
+        throw 'Set api.tenantCatalogPath in config/local.json.'
+    }
+
+    $path = if ([System.IO.Path]::IsPathRooted($configuredPath)) {
+        $configuredPath
+    } else {
+        Join-Path $script:DevRoot $configuredPath
+    }
+    $path = [System.IO.Path]::GetFullPath($path)
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+        throw "Tenant catalog not found: $path. Copy config/tenants.example.json to config/tenants.local.json and configure it."
+    }
+    return $path
+}
+
+function Assert-TenantConfigured {
+    param([Parameter(Mandatory)][string]$TenantId)
+
+    $catalogPath = Get-TenantCatalogPath
+    $catalog = Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json
+    if ($null -eq $catalog.Tenancy -or $null -eq $catalog.Tenancy.Tenants) {
+        throw "Tenant catalog must define Tenancy.Tenants: $catalogPath."
+    }
+    $entry = $catalog.Tenancy.Tenants.PSObject.Properties[$TenantId]
+    if ($null -eq $entry) { throw "Tenant '$TenantId' is not defined in $catalogPath." }
+    $tenant = $entry.Value
+    if ([string]::IsNullOrWhiteSpace($tenant.Name)) { throw "Tenant '$TenantId' needs a name." }
+    if ([string]::IsNullOrWhiteSpace($tenant.ConnectionString) -or
+        $tenant.ConnectionString.Contains('CHANGE_ME')) {
+        throw "Tenant '$TenantId' needs a configured connection string in $catalogPath."
+    }
+}
+
 function Get-ApiUrl {
     param([Parameter(Mandatory)][ValidateSet('Browser', 'Phone', 'Emulator')] [string]$Target)
 

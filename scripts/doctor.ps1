@@ -7,6 +7,9 @@ Write-Host 'SimpliaDz local-development configuration'
 Write-Host "  Workspace: $WorkspaceRoot"
 Write-Host "  API bind:  http://$($LocalConfig.api.listenHost):$($LocalConfig.api.port)"
 Write-Host "  Tenant:    $($LocalConfig.api.activeTenantId)"
+$catalogPath = Get-TenantCatalogPath
+Assert-TenantConfigured -TenantId $LocalConfig.api.activeTenantId
+Write-Host "  Catalog:   $catalogPath"
 Write-Host "  Browser:   $(Get-ApiUrl -Target Browser)"
 Write-Host "  Emulator:  $(Get-ApiUrl -Target Emulator)"
 Write-Host "  Phone:     $(Get-ApiUrl -Target Phone)"

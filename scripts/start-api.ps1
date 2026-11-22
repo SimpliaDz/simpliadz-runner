@@ -17,14 +17,16 @@ $env:ASPNETCORE_URLS = "http://${listenHost}:$port"
 if ([string]::IsNullOrWhiteSpace($TenantId)) {
     $TenantId = $LocalConfig.api.activeTenantId
 }
-if (-not [string]::IsNullOrWhiteSpace($TenantId)) {
-    $env:Tenancy__ActiveTenantId = $TenantId
-}
+if ([string]::IsNullOrWhiteSpace($TenantId)) { throw 'Set api.activeTenantId or pass -TenantId.' }
+Assert-TenantConfigured -TenantId $TenantId
+$env:Tenancy__ActiveTenantId = $TenantId
+$env:SIMPLIADZ_TENANTS_FILE = Get-TenantCatalogPath
 
 Write-Host "Starting API on $env:ASPNETCORE_URLS for tenant '$($env:Tenancy__ActiveTenantId)'."
 Push-Location $PlatformRoot
 try {
     dotnet run --project 'src\SimpliaDz.Api' --no-launch-profile
+    if ($LASTEXITCODE -ne 0) { throw "API exited with code $LASTEXITCODE." }
 }
 finally {
     Pop-Location

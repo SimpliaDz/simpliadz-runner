@@ -6,7 +6,7 @@ This folder is the shared local-development entry point for the three sibling re
 - `../simpliadz-web` — Angular web application
 - `../simpliadz-mobile` — Flutter mobile application
 
-It centralizes machine-specific endpoints without coupling production builds or storing secrets outside the application that owns them.
+It centralizes local startup settings and the private development tenant catalog. Production deployments provide their own protected configuration.
 
 ## First-time setup
 
@@ -14,13 +14,14 @@ From this folder, create your private configuration file:
 
 ```powershell
 Copy-Item .\config\local.example.json .\config\local.json
+Copy-Item .\config\tenants.example.json .\config\tenants.local.json
 ```
 
-Then update `api.phoneHost` with the IPv4 address of the development PC on the same Wi-Fi/LAN as a physical phone. Leave `api.listenHost` as `0.0.0.0` when testing from another device; use `127.0.0.1` when only the PC will reach the API.
+Set the SQL connection string and enabled modules in `config/tenants.local.json`. Update `api.phoneHost` with the IPv4 address of the development PC on the same Wi-Fi/LAN as a physical phone. Leave `api.listenHost` as `0.0.0.0` when testing from another device; use `127.0.0.1` when only the PC will reach the API.
 
-`api.activeTenantId` selects an existing tenant from `../simpliadz-platform/src/tenants.json`. It only selects the tenant served by the local API process; the tenant descriptor, database connection string, modules, migrations, and seed data remain owned by the backend repository.
+`api.tenantCatalogPath` points to the private catalog, relative to this repository or by absolute path. `api.activeTenantId` selects an entry for the local API instance. The migrator takes an explicit tenant ID. Both processes read the same catalog; the backend owns its schema, migrations, and tenant validation.
 
-`config/local.json` is intentionally ignored by Git. Do not put database passwords, tokens, or production URLs in this folder.
+`config/local.json` and `config/tenants.local.json` are ignored by Git. Keep production credentials in a secret store.
 
 ## Daily workflow
 
@@ -64,7 +65,7 @@ To check the profile, project locations, and required commands:
 
 ## Adding a local tenant
 
-1. Add the tenant descriptor and a unique SQL database name to `../simpliadz-platform/src/tenants.json`.
+1. Add the tenant descriptor and a unique SQL database name to `config/tenants.local.json`.
 2. Start SQL Server with `./scripts/start-database.ps1`.
 3. Create its schema and local admin with:
 
@@ -83,9 +84,9 @@ The web app and mobile app automatically use the API process currently running o
 
 ## Configuration ownership
 
-This folder owns only developer-machine orchestration. Each application remains the source of truth for its own runtime configuration:
+This folder owns developer-machine orchestration and the private local tenant catalog. Applications remain responsible for their runtime behavior:
 
-- The API owns tenant settings, connection strings, migrations, and server configuration.
+- The backend reads the tenant catalog path supplied by `SIMPLIADZ_TENANTS_FILE`, validates the selected tenant, and owns migrations and server behavior. A future control plane can replace the file-backed catalog.
 - The web app owns its deploy-time `public/config/app-config.json` and production reverse-proxy design.
 - The mobile app owns its `API_BASE_URL` Dart define and production build configuration.
 
