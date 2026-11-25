@@ -3,7 +3,7 @@ param()
 
 . (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
 
-Write-Host 'SimpliaDz local-development configuration'
+Write-Host 'Simplia local-development configuration'
 Write-Host "  Workspace: $WorkspaceRoot"
 Write-Host "  API bind:  http://$($LocalConfig.api.listenHost):$($LocalConfig.api.port)"
 Write-Host "  Tenant:    $($LocalConfig.api.activeTenantId)"

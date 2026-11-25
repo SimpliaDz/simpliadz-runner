@@ -1,4 +1,4 @@
-# SimpliaDz local development
+# Simplia local development
 
 This folder is the shared local-development entry point for the three sibling repositories:
 
@@ -7,6 +7,8 @@ This folder is the shared local-development entry point for the three sibling re
 - `../simpliadz-mobile` — Flutter mobile application
 
 It centralizes local startup settings and the private development tenant catalog. Production deployments provide their own protected configuration.
+
+The product is branded **Simplia**. The runner uses the sibling checkout names above and the existing private tenant configuration. Keep those names when following the commands in this guide.
 
 ## First-time setup
 
