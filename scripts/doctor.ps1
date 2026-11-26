@@ -1,9 +1,9 @@
 [CmdletBinding()]
 param()
 
-. (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
+. (Join-Path $PSScriptRoot 'Import-SimpliaWearConfig.ps1')
 
-Write-Host 'Simplia local-development configuration'
+Write-Host 'SimpliaWear local-development configuration'
 Write-Host "  Workspace: $WorkspaceRoot"
 Write-Host "  API bind:  http://$($LocalConfig.api.listenHost):$($LocalConfig.api.port)"
 Write-Host "  Tenant:    $($LocalConfig.api.activeTenantId)"

@@ -1,14 +1,14 @@
-# Simplia local development
+# SimpliaWear local development
 
 This folder is the shared local-development entry point for the three sibling repositories:
 
-- `../simpliadz-platform` — .NET API and database tooling
-- `../simpliadz-web` — Angular web application
-- `../simpliadz-mobile` — Flutter mobile application
+- `../simplia-wear-api` — .NET API and database tooling
+- `../simplia-web` — Angular web application
+- `../simplia-mobile` — Flutter mobile application
 
 It centralizes local startup settings and the private development tenant catalog. Production deployments provide their own protected configuration.
 
-The product is branded **Simplia**. The runner uses the sibling checkout names above and the existing private tenant configuration. Keep those names when following the commands in this guide.
+The product is branded **SimpliaWear**. The runner uses the sibling checkout names above and the existing private tenant configuration. Keep those names when following the commands in this guide.
 
 ## First-time setup
 
@@ -97,7 +97,7 @@ The web app and mobile app automatically use the API process currently running o
 
 This folder owns developer-machine orchestration and the private local tenant catalog. Applications remain responsible for their runtime behavior:
 
-- The backend reads the tenant catalog path supplied by `SIMPLIADZ_TENANTS_FILE`, validates the selected tenant, and owns migrations and server behavior. A future control plane can replace the file-backed catalog.
+- The backend reads the tenant catalog path supplied by `SIMPLIAWEAR_TENANTS_FILE`, validates the selected tenant, and owns migrations and server behavior. A future control plane can replace the file-backed catalog.
 - The web app owns its deploy-time `public/config/app-config.json` and production reverse-proxy design.
 - The mobile app owns its `API_BASE_URL` Dart define and production build configuration.
 

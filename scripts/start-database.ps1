@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param()
 
-. (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
+. (Join-Path $PSScriptRoot 'Import-SimpliaWearConfig.ps1')
 
 Push-Location $PlatformRoot
 try {

@@ -3,7 +3,7 @@ param(
     [string]$TenantId
 )
 
-. (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
+. (Join-Path $PSScriptRoot 'Import-SimpliaWearConfig.ps1')
 
 $port = $LocalConfig.api.port
 $listenHost = $LocalConfig.api.listenHost
@@ -20,12 +20,12 @@ if ([string]::IsNullOrWhiteSpace($TenantId)) {
 if ([string]::IsNullOrWhiteSpace($TenantId)) { throw 'Set api.activeTenantId or pass -TenantId.' }
 Assert-TenantConfigured -TenantId $TenantId
 $env:Tenancy__ActiveTenantId = $TenantId
-$env:SIMPLIADZ_TENANTS_FILE = Get-TenantCatalogPath
+$env:SIMPLIAWEAR_TENANTS_FILE = Get-TenantCatalogPath
 
 Write-Host "Starting API on $env:ASPNETCORE_URLS for tenant '$($env:Tenancy__ActiveTenantId)'."
 Push-Location $PlatformRoot
 try {
-    dotnet run --project 'src\SimpliaDz.Api' --no-launch-profile
+    dotnet run --project 'src\SimpliaWear.Api' --no-launch-profile
     if ($LASTEXITCODE -ne 0) { throw "API exited with code $LASTEXITCODE." }
 }
 finally {

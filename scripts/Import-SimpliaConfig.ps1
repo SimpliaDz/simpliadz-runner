@@ -6,9 +6,9 @@ $ErrorActionPreference = 'Stop'
 
 $script:DevRoot = Split-Path -Parent $PSScriptRoot
 $script:WorkspaceRoot = Split-Path -Parent $script:DevRoot
-$script:MobileRoot = Join-Path $script:WorkspaceRoot 'simpliadz-mobile'
-$script:WebRoot = Join-Path $script:WorkspaceRoot 'simpliadz-web'
-$script:PlatformRoot = Join-Path $script:WorkspaceRoot 'simpliadz-platform'
+$script:MobileRoot = Join-Path $script:WorkspaceRoot 'simplia-mobile'
+$script:WebRoot = Join-Path $script:WorkspaceRoot 'simplia-web'
+$script:PlatformRoot = Join-Path $script:WorkspaceRoot 'simplia-api'
 
 $localConfigPath = Join-Path $script:DevRoot 'config\local.json'
 if (-not (Test-Path -LiteralPath $localConfigPath)) {

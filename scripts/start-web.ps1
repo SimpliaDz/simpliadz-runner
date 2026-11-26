@@ -4,7 +4,7 @@ param(
     [string]$Language
 )
 
-. (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
+. (Join-Path $PSScriptRoot 'Import-SimpliaWearConfig.ps1')
 
 $proxyTarget = Get-ApiUrl -Target Browser
 $proxyPath = Join-Path $WebRoot 'proxy.local.conf.json'

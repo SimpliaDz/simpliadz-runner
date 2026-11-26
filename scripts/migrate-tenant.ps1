@@ -5,14 +5,14 @@ param(
     [switch]$SeedDemo
 )
 
-. (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
+. (Join-Path $PSScriptRoot 'Import-SimpliaWearConfig.ps1')
 
 Assert-TenantConfigured -TenantId $TenantId
-$env:SIMPLIADZ_TENANTS_FILE = Get-TenantCatalogPath
+$env:SIMPLIAWEAR_TENANTS_FILE = Get-TenantCatalogPath
 
 Push-Location $PlatformRoot
 try {
-    $arguments = @('run', '--project', 'src\SimpliaDz.DatabaseMigrator', '--', '--tenant', $TenantId)
+    $arguments = @('run', '--project', 'src\SimpliaWear.DatabaseMigrator', '--', '--tenant', $TenantId)
     if ($SeedDemo) { $arguments += '--seed-demo' }
     & dotnet @arguments
     if ($LASTEXITCODE -ne 0) { throw "Migrator exited with code $LASTEXITCODE." }

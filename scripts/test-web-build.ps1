@@ -5,9 +5,9 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-. (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
+. (Join-Path $PSScriptRoot 'Import-SimpliaWearConfig.ps1')
 
-$outputRoot = Join-Path $WebRoot 'dist\simpliadz-web\browser'
+$outputRoot = Join-Path $WebRoot 'dist\simplia-web\browser'
 $serverScript = Join-Path $PSScriptRoot 'serve-localized-web.mjs'
 $apiTarget = Get-ApiUrl -Target Browser
 

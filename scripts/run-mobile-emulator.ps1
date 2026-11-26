@@ -3,7 +3,7 @@ param(
     [string]$DeviceId
 )
 
-. (Join-Path $PSScriptRoot 'Import-SimpliaDzConfig.ps1')
+. (Join-Path $PSScriptRoot 'Import-SimpliaWearConfig.ps1')
 
 if ([string]::IsNullOrWhiteSpace($DeviceId)) { $DeviceId = $LocalConfig.mobile.emulatorDeviceId }
 $apiUrl = Get-ApiUrl -Target Emulator
